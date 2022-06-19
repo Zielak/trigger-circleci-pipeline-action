@@ -38,15 +38,16 @@ const headers = {
   "x-attribution-actor-id": context.actor,
   "Circle-Token": `${process.env.CCI_TOKEN}`,
 };
-const parameters = {
-  GHA_Actor: context.actor,
-  GHA_Action: context.action,
-  GHA_Event: context.eventName,
-};
+const parameters = {};
 
-const metaData = getInput("GHA_Meta");
-if (metaData.length > 0) {
-  Object.assign(parameters, { GHA_Meta: metaData });
+const moreParams = getInput("parameters");
+if (moreParams.length > 0) {
+  try {
+    Object.assign(parameters, JSON.parse(moreParams));
+  } catch (e) {
+    setFailed("parameters are not valid JSON. aborting");
+    process.exit(1);
+  }
 }
 
 const body = {

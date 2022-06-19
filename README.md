@@ -37,16 +37,7 @@ jobs:
    ```yaml
    version: 2.1
    parameters:
-     GHA_Actor:
-       type: string
-       default: ""
-     GHA_Action:
-       type: string
-       default: ""
-     GHA_Event:
-       type: string
-       default: ""
-     GHA_Meta:
+     myParam:
        type: string
        default: ""
    ```
@@ -59,11 +50,13 @@ jobs:
 
 Optional [input parameters](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs) that allow you to specify additional metadata.
 
-### GHA_Meta
+### `parameters`
 
 **required:** false
 
-**description**: An optional additional metadata parameter. Will be available on the CircleCI pipeline as GHA_Meta.
+**description**: An optional additional parameters.
+Will be available on the CircleCI pipeline.
+Format as JSON string, eg: `'{"myParam": "value"}'`
 
 ```yaml
 jobs:
@@ -74,7 +67,7 @@ jobs:
         id: <customize id>
         uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
         with:
-          GHA_Meta: "<custom data>"
+          GHA_Meta: '{"myParam": "value"}'
         env:
           CCI_TOKEN: ${{ secrets.CCI_TOKEN }}
 ```

@@ -12730,15 +12730,16 @@ const headers = {
   "x-attribution-actor-id": _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.actor,
   "Circle-Token": `${process.env.CCI_TOKEN}`,
 };
-const parameters = {
-  GHA_Actor: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.actor,
-  GHA_Action: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.action,
-  GHA_Event: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.eventName,
-};
+const parameters = {};
 
-const metaData = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("GHA_Meta");
-if (metaData.length > 0) {
-  Object.assign(parameters, { GHA_Meta: metaData });
+const moreParams = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)("parameters");
+if (moreParams.length > 0) {
+  try {
+    Object.assign(parameters, JSON.parse(moreParams));
+  } catch (e) {
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)("parameters are not valid JSON. aborting");
+    process.exit(1);
+  }
 }
 
 const body = {
